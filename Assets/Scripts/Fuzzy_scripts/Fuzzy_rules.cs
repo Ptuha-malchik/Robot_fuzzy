@@ -19,7 +19,7 @@ public class Fuzzy_rules : MonoBehaviour
         if ((l.To_target == "РОВНО") && (l.Distance_front == "ДАЛЕКО") && (l.Dist_to_target == "ДАЛЕКО")) { l.Speed = "БЫСТРО"; }
             if ((l.To_target == "РОВНО") && ((l.Distance_front == "ДАЛЕКО") || (l.Distance_front == "СРЕДНЕ")) && (l.Dist_to_target == "СРЕДНЕ")) { l.Speed = "СРЕДНЕ"; }
             if ((l.To_target == "РОВНО") && ((l.Distance_front == "ДАЛЕКО") || (l.Distance_front == "СРЕДНЕ") || (l.Distance_front == "БЛИЗКО")) && (l.Dist_to_target == "БЛИЗКО")) { l.Speed = "МЕДЛЕННО"; }
-            if ((l.To_target == "РОВНО") && ((l.Distance_front == "ДАЛЕКО") || (l.Distance_front == "СРЕДНЕ") || (l.Distance_front == "БЛИЗКО")) && (l.Dist_to_target == "ВПЛОТНУЮ")) { l.Speed = "СТОП"; }
+            
 
             //повороты от препятствий. Если на предыдущем шаге мы уперлись в препядствие, а двигались мы в направление цели, делается проверка лево-право, и поворот осуществляется в свободное пространство
             if ((l.To_target == "РОВНО") && (l.Distance_front == "БЛИЗКО") && ((l.Distance_left == "ДАЛЕКО") || ((l.Distance_left == "СРЕДНЕ")))) { l.Degree = "ЛЕВЕЕ"; }
@@ -39,7 +39,10 @@ public class Fuzzy_rules : MonoBehaviour
 
         //ВЫравнивание на глиссаду. Тут делаем поворот, чтобы ту таргет стал ровно и мы вернулись к началу. т.е. петля должана замкнуться.
 
-        if ((l.Distance_left == "БЛИЗКО") && ((l.To_target == "ЛЕВЕЕ") || (l.To_target == "СИЛЬНО ЛЕВЕЕ"))) { l.Degree == "ЛЕВЕЕ"; }
-        if ((l.Distance_right == "БЛИЗКО") && ((l.To_target == "ПРАВЕЕ") || (l.To_target == "СИЛЬНО ПРАВЕЕ"))) { l.Degree == "ПРАВЕЕ"; }
+        if ((l.Distance_left == "БЛИЗКО") && ((l.To_target == "ЛЕВЕЕ") || (l.To_target == "СИЛЬНО ЛЕВЕЕ"))) { l.Degree = "ЛЕВЕЕ"; }
+        if ((l.Distance_right == "БЛИЗКО") && ((l.To_target == "ПРАВЕЕ") || (l.To_target == "СИЛЬНО ПРАВЕЕ"))) { l.Degree = "ПРАВЕЕ"; }
+
+
+        if ((l.Dist_to_target == "ВПЛОТНУЮ")) { l.Speed = "СТОП"; l.Degree = "РОВНО"; }
     }
 }
