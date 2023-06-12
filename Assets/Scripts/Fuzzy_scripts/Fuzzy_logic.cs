@@ -58,7 +58,7 @@ public class Fuzzy_logic : MonoBehaviour
     private static string To_target_left = "ËÅÂÅÅ";
     private static string To_target_more_left = "ÑÈËÜÍÎ ËÅÂÅÅ";
     private static string To_target_right = "ÏĞÀÂÅÅ";
-    private static string To_target_more_right = "ÑÈËÜÍÎ ÏĞÀÂÎ";
+    private static string To_target_more_right = "ÑÈËÜÍÎ ÏĞÀÂÅÅ";
 
     private static string Distance_to_target_stop_name = "ÂÏËÎÒÍÓŞ";
     private static string Distance_to_target_low_name = "ÁËÈÇÊÎ";
@@ -72,6 +72,9 @@ public class Fuzzy_logic : MonoBehaviour
 
 
     // Ïîëó÷åííûå äàííûå
+    public string Distance_45_left = "ÁËÈÇÊÎ";
+    public string Distance_45_right = "ÁËÈÇÊÎ";
+
     public string Distance_left = "ÁËÈÇÊÎ";
     public string Distance_right = "ÁËÈÇÊÎ";
     public string Distance_front = "ÁËÈÇÊÎ";
@@ -157,6 +160,28 @@ public class Fuzzy_logic : MonoBehaviour
         if (y_dist_low == mass_dist_r[2]) Distance_right = Distance_low_name;
         if (y_dist_med == mass_dist_r[2]) Distance_right = Distance_med_name;
         if (y_dist_hig == mass_dist_r[2]) Distance_right = Distance_high_name;
+
+        //////////////////////////////////////////////
+        // Ñïğàâà 45
+        y_dist_low = Rules_y(Get_rows(Dist_func, 0), Lidar.right_45_dist);
+        y_dist_med = Rules_y(Get_rows(Dist_func, 1), Lidar.right_45_dist);
+        y_dist_hig = Rules_y(Get_rows(Dist_func, 2), Lidar.right_45_dist);
+        float[] mass_dist_r_45 = { y_dist_low, y_dist_med, y_dist_hig };
+        Array.Sort(mass_dist_r_45);
+        if (y_dist_low == mass_dist_r_45[2]) Distance_45_right = Distance_low_name;
+        if (y_dist_med == mass_dist_r_45[2]) Distance_45_right = Distance_med_name;
+        if (y_dist_hig == mass_dist_r_45[2]) Distance_45_right = Distance_high_name;
+
+        //////////////////////////////////////////////
+        // Ñëåâà 45
+        y_dist_low = Rules_y(Get_rows(Dist_func, 0), Lidar.left_45_dist);
+        y_dist_med = Rules_y(Get_rows(Dist_func, 1), Lidar.left_45_dist);
+        y_dist_hig = Rules_y(Get_rows(Dist_func, 2), Lidar.left_45_dist);
+        float[] mass_dist_l_45 = { y_dist_low, y_dist_med, y_dist_hig };
+        Array.Sort(mass_dist_l_45);
+        if (y_dist_low == mass_dist_l_45[2]) Distance_45_left = Distance_low_name;
+        if (y_dist_med == mass_dist_l_45[2]) Distance_45_left = Distance_med_name;
+        if (y_dist_hig == mass_dist_l_45[2]) Distance_45_left = Distance_high_name;
 
         // Ïğÿìî
         y_dist_low = Rules_y(Get_rows(Dist_func, 0), Lidar.forward_dist);

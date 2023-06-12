@@ -12,14 +12,19 @@ public class Lidar : MonoBehaviour
     public float Lidar_speed = 0;
     public float Point_min_distance = 0;
     public GameObject point_collect;
-    public GameObject Point_Lidar;          // Префаб токи от лидара
+    public GameObject Point_Lidar;                  // Префаб токи от лидара
 
-    public GameObject Laser_obj_forw;          // До точки луч
-    public GameObject Laser_obj_right;          // До точки луч
-    public GameObject Laser_obj_left;          // До точки луч
+    public GameObject Laser_obj_forw;               // До точки луч
+    public GameObject Laser_obj_right;              // До точки луч
+    public GameObject Laser_obj_left;               // До точки луч
+    public GameObject Laser_obj_45_left;            // До точки луч
+    public GameObject Laser_obj_45_righ;            // До точки луч
 
     public float left_dist = 0;
     public float right_dist = 0;
+    public float left_45_dist = 0;
+    public float right_45_dist = 0;
+
     public float forward_dist = 0;
 
     private Vector3 rotationVector;
@@ -160,7 +165,70 @@ public class Lidar : MonoBehaviour
             );
             Laser_obj_left.transform.localScale = new Vector3(0.1f, spaceBetween / 2, 0.1f);
         }
-        
+
+
+        ray = new Ray(Start_ray.transform.position, new Vector3(1, 0, 1));
+        Physics.Raycast(ray, out hit, 1000);
+        if (hit.collider != null)
+        {
+            left_45_dist = hit.distance;
+
+            Vector3 center = (Start_ray.transform.position + hit.point) / 2;
+            Laser_obj_45_left.transform.position = center;
+            float spaceBetween = Mathf.Sqrt
+            (
+                Mathf.Pow(Start_ray.transform.position.x - hit.point.x, 2) +
+                Mathf.Pow(Start_ray.transform.position.y - hit.point.y, 2) +
+                Mathf.Pow(Start_ray.transform.position.z - hit.point.z, 2)
+            );
+            Laser_obj_45_left.transform.localScale = new Vector3(0.1f, spaceBetween / 2, 0.1f);
+
+        }
+        else
+        {
+            left_45_dist = 100;
+            float angle = Start_ray.transform.eulerAngles.y - 45f;
+            if (angle >= 360) angle -= 360;
+            if (angle <= -360) angle += 360;
+            angle *= Mathf.Deg2Rad;
+
+            Vector3 end_point = new Vector3(Start_ray.transform.position.x + 100 * Mathf.Cos(angle), Start_ray.transform.position.y, Start_ray.transform.position.z - 100 * Mathf.Sin(angle));
+            Vector3 center = (Start_ray.transform.position + end_point) / 2;
+            Laser_obj_45_left.transform.position = center;
+            Laser_obj_45_left.transform.localScale = new Vector3(0.1f, 50, 0.1f);
+        }
+
+        ray = new Ray(Start_ray.transform.position, new Vector3(1, 0, -1));
+        Physics.Raycast(ray, out hit, 150);
+        if (hit.collider != null)
+        {
+            right_45_dist = hit.distance;
+
+            Vector3 center = (Start_ray.transform.position + hit.point) / 2;
+            Laser_obj_45_righ.transform.position = center;
+            float spaceBetween = Mathf.Sqrt
+            (
+                Mathf.Pow(Start_ray.transform.position.x - hit.point.x, 2) +
+                Mathf.Pow(Start_ray.transform.position.y - hit.point.y, 2) +
+                Mathf.Pow(Start_ray.transform.position.z - hit.point.z, 2)
+            );
+            Laser_obj_45_righ.transform.localScale = new Vector3(0.1f, spaceBetween / 2, 0.1f);
+
+        }
+        else
+        {
+            right_45_dist = 100;
+            float angle = Start_ray.transform.eulerAngles.y + 45f;
+            if (angle >= 360) angle -= 360;
+            if (angle <= -360) angle += 360;
+            angle *= Mathf.Deg2Rad;
+
+            Vector3 end_point = new Vector3(Start_ray.transform.position.x + 100 * Mathf.Cos(angle), Start_ray.transform.position.y, Start_ray.transform.position.z - 100 * Mathf.Sin(angle));
+            Vector3 center = (Start_ray.transform.position + end_point) / 2;
+            Laser_obj_45_righ.transform.position = center;
+            Laser_obj_45_righ.transform.localScale = new Vector3(0.1f, 50, 0.1f);
+        }
+
     }
 
     private void Point_lidat()
