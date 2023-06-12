@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fuzzy_rules : MonoBehaviour
 {
-    public Fuzzy_logic l = new Fuzzy_logic();
+    public Fuzzy_logic l;
 
     private void FixedUpdate()
     {
