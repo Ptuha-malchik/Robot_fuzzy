@@ -13,8 +13,8 @@ using UnityEngine.UIElements;
 public class Fuzzy_logic : MonoBehaviour
 {
     public Transform target;
-    public Move Move = new Move();
-    public Lidar Lidar = new Lidar();
+    public Move Move;
+    public Lidar Lidar;
 
     // Функция принадлежности
 
