@@ -15,6 +15,7 @@ public class Fuzzy_logic : MonoBehaviour
     public Transform target;
     public Move Move;
     public Lidar Lidar;
+    public Transform pos;
 
     // Функция принадлежности
 
@@ -33,8 +34,8 @@ public class Fuzzy_logic : MonoBehaviour
                                              {25f, 30, 50, 100}};           // Далеко
 
     public float[,] Deg_to_target_func =    {{-20, -18.5f, 18.5f, 20},      // Норма
-                                             {-18.5f, -25, -90, -100},      // Левее
-                                             {-95, -110, -170, -180},       // Сильно левее
+                                             {-100, -90, -25, -18.5f},      // Левее
+                                             {-180, -170, -110, -95},       // Сильно левее
                                              {18.5f, 25, 90, 100},          // Правее
                                              {95, 110, 170, 180}};          // Сильно правее
 
@@ -67,7 +68,7 @@ public class Fuzzy_logic : MonoBehaviour
 
     // Управление
     public string Speed = "СТОП";
-    public string Degree = "РОВНО";// Заданный угол (управление)
+    public string Degree = "РОВНО"; // Заданный угол (управление)
 
 
     // Полученные данные
@@ -104,18 +105,18 @@ public class Fuzzy_logic : MonoBehaviour
     public float Rules_y(float[] x_m, float x)
     {
         float y = 0;
-        if (x >= 0)
-        {
+        //if (x >= 0)
+        //{
             if ((x >= x_m[0]) && (x <= x_m[1])) y = (x - x_m[0]) / (x_m[1] - x_m[0]);
             if ((x > x_m[1]) & (x <= x_m[2])) y = 1;
             if ((x > x_m[2]) & (x <= x_m[3])) y = (x_m[3] - x) / (x_m[3] - x_m[2]);
-        }
+        /*}
         else
         {
             if ((x <= x_m[0]) && (x >= x_m[1])) y = (x - x_m[0]) / (x_m[1] - x_m[0]);
             if ((x < x_m[1]) & (x >= x_m[2])) y = 1;
             if ((x < x_m[2]) & (x >= x_m[3])) y = (x_m[3] - x) / (x_m[3] - x_m[2]);
-        }
+        }*/
 
         return y;
     }
@@ -183,17 +184,15 @@ public class Fuzzy_logic : MonoBehaviour
         if (y_dist_med == mass_dist_to_target[3]) Dist_to_target = Distance_to_target_med_name;
         if (y_dist_hig == mass_dist_to_target[3]) Dist_to_target = Distance_to_target_high_name;
 
-    // Рассчет Направления на цель для определения переменной
-    //float angle = transform.eulerAngles.y;
 
-    float angle = AngleAroundAxis(target.transform.forward, target.transform.position - transform.position, transform.up)-90f;
+        float angle = (Vector3.SignedAngle(target.transform.position- pos.transform.position, pos.transform.forward, Vector3.up)+90)*-1;
         if (angle < -180)
         {
             angle += 360;
         }
-
-
         //UnityEngine.Debug.Log(angle);
+
+
 
         float y_angle_norm = Rules_y(Get_rows(Deg_to_target_func, 0), angle);
         float y_angle_left = Rules_y(Get_rows(Deg_to_target_func, 1), angle);
