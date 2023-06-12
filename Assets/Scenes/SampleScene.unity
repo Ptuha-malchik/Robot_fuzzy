@@ -625,7 +625,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e71e7c291ef1170438902a59c91bfd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Lidar_vect: []
+  logic: {fileID: 509223379}
+  Gen_vect: []
+--- !u!114 &509223379 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8134530458773977057, guid: 3c2eaea77148a3241a6b498b13a25dbd, type: 3}
+  m_PrefabInstance: {fileID: 8134530459004261928}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509223367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd5839bd7cc9e3949bd2e669849fcc01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &535403617
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,7 +1099,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779715496}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 94.4, y: 2, z: 3.3}
+  m_LocalPosition: {x: 75.32, y: 2, z: 34.52}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1969,6 +1981,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1964686134 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8134530460118827798, guid: 3c2eaea77148a3241a6b498b13a25dbd, type: 3}
+  m_PrefabInstance: {fileID: 8134530459004261928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2044327349
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,6 +2090,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8134530458773977057, guid: 3c2eaea77148a3241a6b498b13a25dbd, type: 3}
+      propertyPath: pos
+      value: 
+      objectReference: {fileID: 1964686134}
     - target: {fileID: 8134530458773977057, guid: 3c2eaea77148a3241a6b498b13a25dbd, type: 3}
       propertyPath: target
       value: 
