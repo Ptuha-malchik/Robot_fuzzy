@@ -167,8 +167,8 @@ public class Lidar : MonoBehaviour
         }
 
 
-        ray = new Ray(Start_ray.transform.position, new Vector3(1, 0, 1));
-        Physics.Raycast(ray, out hit, 1000);
+        ray = new Ray(Start_ray.transform.position, (Start_ray.transform.forward + Start_ray.transform.right).normalized);
+        Physics.Raycast(ray, out hit, 150);
         if (hit.collider != null)
         {
             left_45_dist = hit.distance;
@@ -198,7 +198,7 @@ public class Lidar : MonoBehaviour
             Laser_obj_45_left.transform.localScale = new Vector3(0.1f, 50, 0.1f);
         }
 
-        ray = new Ray(Start_ray.transform.position, new Vector3(1, 0, -1));
+        ray = new Ray(Start_ray.transform.position, (Start_ray.transform.forward - Start_ray.transform.right).normalized*-1);
         Physics.Raycast(ray, out hit, 150);
         if (hit.collider != null)
         {

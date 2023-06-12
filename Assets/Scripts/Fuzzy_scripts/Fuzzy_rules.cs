@@ -32,6 +32,8 @@ public class Fuzzy_rules : MonoBehaviour
         if ((l.Distance_right == "акхгйн")) { l.Degree = "яхкэмн кебее"; }
         if ((l.Distance_left == "акхгйн")) { l.Degree = "яхкэмн опюбее"; }
 
+        if ((l.Distance_45_right == "акхгйн")) { l.Degree = "яхкэмн кебее"; }
+        if ((l.Distance_45_left == "акхгйн")) { l.Degree = "яхкэмн опюбее"; }
         //if ((l.Distance_front == "акхгйн") & (l.Distance_right == "дюкейн")) { l.Degree = "яхкэмн опюбее"; }
 
 
