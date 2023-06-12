@@ -29,12 +29,15 @@ public class Fuzzy_rules : MonoBehaviour
         if ((l.To_target == "опюбее") && ((l.Distance_front == "дюкейн") || (l.Distance_front == "япедме")) && (l.Distance_right == "акхгйн")) { l.Speed = "япедме"; }
 
         //гЮБЕПЬЕМХЕ НАЗЕГДЮ
-        if (((l.To_target == "кебее") || (l.To_target == "яхкэмн кебее")) && ((l.Distance_left == "дюкейн") || (l.Distance_left == "япедмее"))) { l.Degree = "кебее"; }
-        if (((l.To_target == "опюбее") || (l.To_target == "яхкэмн опюбее")) && ((l.Distance_right == "дюкейн") || (l.Distance_right == "япедмее"))) { l.Degree = "опюбее"; }
+        if (((l.To_target == "кебее") || (l.To_target == "яхкэмн кебее")) && ((l.Distance_left == "дюкейн") || (l.Distance_left == "япедме"))) { l.Degree = "кебее"; }
+        if (((l.To_target == "опюбее") || (l.To_target == "яхкэмн опюбее")) && ((l.Distance_right == "дюкейн") || (l.Distance_right == "япедме"))) { l.Degree = "опюбее"; }
 
+        //гЮУНД МЮ ЦКХЯЯЮДС
+        if (((l.To_target == "кебее") || (l.To_target == "пнбмн")) && ((l.Distance_front == "дюкейн") || (l.Distance_front == "япедме"))) { l.Speed = "япедме"; }
+        if (((l.To_target == "опюбее") || (l.To_target == "пнбмн")) && ((l.Distance_front == "дюкейн") || (l.Distance_front == "япедме"))) { l.Speed = "япедме"; }
 
-
-
+        //бШПЮБМХБЮМХЕ МЮ ЦКХЯЯЮДС
+        //if ((l.To_target == "кебее") || ()) 
 
         /*
         if ((l.To_target == "пнбмн") && (l.Distance_front == "акхгйн") && (l.Distance_left == "дюкейн")) 
