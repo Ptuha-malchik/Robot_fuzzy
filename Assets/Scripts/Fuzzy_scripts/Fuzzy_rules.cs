@@ -15,7 +15,7 @@ public class Fuzzy_rules : MonoBehaviour
     {
 
         // Расстояния. Базовая проверка, много условий, но если они все совпадут, то робот поедет в направление цели и при удачном стечении он на ней оставноится
-        /*
+        
         if (l.To_target == "РОВНО") { l.Degree = "РОВНО"; }
         if (l.To_target == "ЛЕВЕЕ") { l.Degree = "ЛЕВЕЕ"; }
         if (l.To_target == "СИЛЬНО ЛЕВЕЕ") { l.Degree = "СИЛЬНО ЛЕВЕЕ"; }
@@ -38,6 +38,6 @@ public class Fuzzy_rules : MonoBehaviour
 
 
         if (l.Dist_to_target == "ВПЛОТНУЮ") { l.Speed = "СТОП"; l.Degree = "РОВНО"; }
-        */
+        
     }
 }
