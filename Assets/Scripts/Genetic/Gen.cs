@@ -10,9 +10,16 @@ public class Gen : MonoBehaviour
 
     public List<float> Gen_vect = new List<float>(); // Позиции точек препятствий
 
-    public void generate_genetic()
+    private void Start()
     {
-        for (int i = 0; i < logic.Speed_func.Length; i++)
+        read_genetic();
+    }
+
+
+
+    public void read_genetic()
+    {
+        for (int i = 0; i < logic.Speed_func.GetLength(0); i++)
         {
             for(int j = 0; j<4; j++)
             {
@@ -20,8 +27,40 @@ public class Gen : MonoBehaviour
             }
 
         }
+        
+        for (int i = 0; i < logic.Dist_func.GetLength(0); i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                Gen_vect.Add(logic.Dist_func[i, j]);
+            }
+
+        }
+
+        for (int i = 0; i < logic.Dist_to_target_func.GetLength(0); i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                Gen_vect.Add(logic.Dist_to_target_func[i, j]);
+            }
+        }
 
 
+        for (int i = 0; i < logic.Deg_to_target_func.GetLength(0); i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                Gen_vect.Add(logic.Deg_to_target_func[i, j]);
+            }
+        }
+
+        for (int i = 0; i < logic.Degree_func.GetLength(0); i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                Gen_vect.Add(logic.Degree_func[i, j]);
+            }
+        }
     }
-
+    
 }

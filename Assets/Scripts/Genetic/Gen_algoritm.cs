@@ -6,6 +6,14 @@ using UnityEngine;
 public class Gen_algoritm : MonoBehaviour
 {
     // Создает особей и ведет отбор и мутации
+    
+
+
+    // Создает особей
+    public void generate_population()
+    {
+
+    }
 
  /*
     public double[,] Genetic(double x1, double x2, double x3, double y1, double y2, double y3, double z1, double z2, double z3)
