@@ -13,69 +13,77 @@ using UnityEngine.UIElements;
 public class Fuzzy_logic : MonoBehaviour
 {
     public Transform target;
-    public Move Move = new Move();
-    public Lidar Lidar = new Lidar();
+ LOgic
+    public Move Move;
+    public Lidar Lidar;
+    public Transform pos;
+ main
 
-    // Ôóíêöèÿ ïğèíàäëåæíîñòè
+    // Ã”Ã³Ã­ÃªÃ¶Ã¨Ã¿ Ã¯Ã°Ã¨Ã­Ã Ã¤Ã«Ã¥Ã¦Ã­Ã®Ã±Ã²Ã¨
 
-    public float[,] Speed_func =            {{-0.2f, -0.1f, 0.1f, 0.2f},    // Ñòîï
-                                             {0, 2, 3, 4},                  // Ìåäëåíî
-                                             {3.5f, 5, 8, 10},              // Ñğåäíå
-                                             {8.5f, 12, 15, 20}};           // Áûñòğî
+    public float[,] Speed_func =            {{-0.2f, -0.1f, 0.1f, 0.2f},    // Ã‘Ã²Ã®Ã¯
+                                             {0, 2, 3, 4},                  // ÃŒÃ¥Ã¤Ã«Ã¥Ã­Ã®
+                                             {3.5f, 5, 8, 10},              // Ã‘Ã°Ã¥Ã¤Ã­Ã¥
+                                             {8.5f, 12, 15, 20}};           // ÃÃ»Ã±Ã²Ã°Ã®
 
-    public float[,] Dist_func =             {{0, 1.5f, 4f, 5},              // Áëèçêî
-                                             {4.5f, 6f, 9f, 10},            // Ñğåäíå
-                                             {9.5f, 11, 50, 200}};          // Äàëåêî
+    public float[,] Dist_func =             {{0, 0.5f, 1.5f, 2.5f},              // Ã’Ã¥Ã«Ã®
+                                             {2f, 2.5f, 3f, 4f},            // ÃÃ«Ã¨Ã§ÃªÃ®
+                                             {3.5f, 8f, 14f, 15},            // Ã‘Ã°Ã¥Ã¤Ã­Ã¥
+                                             {9.5f, 11, 50, 200}};          // Ã„Ã Ã«Ã¥ÃªÃ®
 
-    public float[,] Dist_to_target_func =   {{0, 1.5f, 4f, 5},              // ÂÏËÎÒÍÓŞ
-                                             {4.5f, 5f, 8f, 10},            // Áëèçêî
-                                             {9.5f, 11f, 20f, 30},          // Ñğåäíå
-                                             {25f, 30, 50, 100}};           // Äàëåêî
+    public float[,] Dist_to_target_func =   {{0, 1.5f, 4f, 5},              // Ã‚ÃÃ‹ÃÃ’ÃÃ“Ã
+                                             {4.5f, 5f, 8f, 10},            // ÃÃ«Ã¨Ã§ÃªÃ®
+                                             {9.5f, 11f, 20f, 30},          // Ã‘Ã°Ã¥Ã¤Ã­Ã¥
+                                             {25f, 30, 50, 100}};           // Ã„Ã Ã«Ã¥ÃªÃ®
 
-    public float[,] Deg_to_target_func =    {{-20, -18.5f, 18.5f, 20},      // Íîğìà
-                                             {-18.5f, -25, -90, -100},      // Ëåâåå
-                                             {-95, -110, -170, -180},       // Ñèëüíî ëåâåå
-                                             {18.5f, 25, 90, 100},          // Ïğàâåå
-                                             {95, 110, 170, 180}};          // Ñèëüíî ïğàâåå
+    public float[,] Deg_to_target_func =    {{-20, -18.5f, 18.5f, 20},      // ÃÃ®Ã°Ã¬Ã 
+                                             {-100, -90, -25, -18.5f},      // Ã‹Ã¥Ã¢Ã¥Ã¥
+                                             {-180, -170, -110, -95},       // Ã‘Ã¨Ã«Ã¼Ã­Ã® Ã«Ã¥Ã¢Ã¥Ã¥
+                                             {18.5f, 25, 90, 100},          // ÃÃ°Ã Ã¢Ã¥Ã¥
+                                             {95, 110, 170, 180}};          // Ã‘Ã¨Ã«Ã¼Ã­Ã® Ã¯Ã°Ã Ã¢Ã¥Ã¥
 
-    public float[,] Degree_func =           {{0, 0, 0, 0},                  // Íîğìà
-                                             {-1, -1, -1, -1},              // Ëåâåå
-                                             {-2, -2, -2, -2},              // Ñèëüíî ëåâåå
-                                             {1, 1, 1, 1},                  // Ïğàâåå
-                                             {2, 2, 2, 2}};                 // Ñèëüíî ïğàâåå
-    // Ïåğåìåííûå
-    private static string Speed_stop_name = "ÑÒÎÏ";
-    private static string Speed_low_name = "ÌÅÄËÅÍÍÎ";
-    private static string Speed_medium_name = "ÑĞÅÄÍÅ";
-    private static string Speed_fast_name = "ÁÛÑÒĞÎ";
+    public float[,] Degree_func =           {{0, 0, 0, 0},                  // ÃÃ®Ã°Ã¬Ã 
+                                             {-1, -1, -1, -1},              // Ã‹Ã¥Ã¢Ã¥Ã¥
+                                             {-2, -2, -2, -2},              // Ã‘Ã¨Ã«Ã¼Ã­Ã® Ã«Ã¥Ã¢Ã¥Ã¥
+                                             {1, 1, 1, 1},                  // ÃÃ°Ã Ã¢Ã¥Ã¥
+                                             {2, 2, 2, 2}};                 // Ã‘Ã¨Ã«Ã¼Ã­Ã® Ã¯Ã°Ã Ã¢Ã¥Ã¥
+    // ÃÃ¥Ã°Ã¥Ã¬Ã¥Ã­Ã­Ã»Ã¥
+    private static string Speed_stop_name = "Ã‘Ã’ÃÃ";
+    private static string Speed_low_name = "ÃŒÃ…Ã„Ã‹Ã…ÃÃÃ";
+    private static string Speed_medium_name = "Ã‘ÃÃ…Ã„ÃÃ…";
+    private static string Speed_fast_name = "ÃÃ›Ã‘Ã’ÃÃ";
 
-    private static string Distance_low_name = "ÁËÈÇÊÎ";
-    private static string Distance_med_name = "ÑĞÅÄÍÅ";
-    private static string Distance_high_name = "ÄÀËÅÊÎ";
+    private static string Distance_low_zero = "Ã’Ã…Ã‹Ã";
+    private static string Distance_low_name = "ÃÃ‹ÃˆÃ‡ÃŠÃ";
+    private static string Distance_med_name = "Ã‘ÃÃ…Ã„ÃÃ…";
+    private static string Distance_high_name = "Ã„Ã€Ã‹Ã…ÃŠÃ";
 
-    private static string To_target_norm = "ĞÎÂÍÎ";
-    private static string To_target_left = "ËÅÂÅÅ";
-    private static string To_target_more_left = "ÑÈËÜÍÎ ËÅÂÅÅ";
-    private static string To_target_right = "ÏĞÀÂÅÅ";
-    private static string To_target_more_right = "ÑÈËÜÍÎ ÏĞÀÂÎ";
+    private static string To_target_norm = "ÃÃÃ‚ÃÃ";
+    private static string To_target_left = "Ã‹Ã…Ã‚Ã…Ã…";
+    private static string To_target_more_left = "Ã‘ÃˆÃ‹ÃœÃÃ Ã‹Ã…Ã‚Ã…Ã…";
+    private static string To_target_right = "ÃÃÃ€Ã‚Ã…Ã…";
+    private static string To_target_more_right = "Ã‘ÃˆÃ‹ÃœÃÃ ÃÃÃ€Ã‚Ã…Ã…";
 
-    private static string Distance_to_target_stop_name = "ÂÏËÎÒÍÓŞ";
-    private static string Distance_to_target_low_name = "ÁËÈÇÊÎ";
-    private static string Distance_to_target_med_name = "ÑĞÅÄÍÅ";
-    private static string Distance_to_target_high_name = "ÄÀËÅÊÎ";
-    // Òåêóùåå ñòîñòÿíèå
+    private static string Distance_to_target_stop_name = "Ã‚ÃÃ‹ÃÃ’ÃÃ“Ã";
+    private static string Distance_to_target_low_name = "ÃÃ‹ÃˆÃ‡ÃŠÃ";
+    private static string Distance_to_target_med_name = "Ã‘ÃÃ…Ã„ÃÃ…";
+    private static string Distance_to_target_high_name = "Ã„Ã€Ã‹Ã…ÃŠÃ";
+    // Ã’Ã¥ÃªÃ³Ã¹Ã¥Ã¥ Ã±Ã²Ã®Ã±Ã²Ã¿Ã­Ã¨Ã¥
 
-    // Óïğàâëåíèå
-    public string Speed = "ÑÒÎÏ";
-    public string Degree = "ĞÎÂÍÎ";// Çàäàííûé óãîë (óïğàâëåíèå)
+    // Ã“Ã¯Ã°Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¥
+    public string Speed = "Ã‘Ã’ÃÃ";
+    public string Degree = "ÃÃÃ‚ÃÃ"; // Ã‡Ã Ã¤Ã Ã­Ã­Ã»Ã© Ã³Ã£Ã®Ã« (Ã³Ã¯Ã°Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¥)
 
 
-    // Ïîëó÷åííûå äàííûå
-    public string Distance_left = "ÁËÈÇÊÎ";
-    public string Distance_right = "ÁËÈÇÊÎ";
-    public string Distance_front = "ÁËÈÇÊÎ";
-    public string To_target = "ĞÎÂÍÎ";
-    public string Dist_to_target = "ÄÀËÅÊÎ";
+    // ÃÃ®Ã«Ã³Ã·Ã¥Ã­Ã­Ã»Ã¥ Ã¤Ã Ã­Ã­Ã»Ã¥
+    public string Distance_45_left = "ÃÃ‹ÃˆÃ‡ÃŠÃ";
+    public string Distance_45_right = "ÃÃ‹ÃˆÃ‡ÃŠÃ";
+
+    public string Distance_left = "ÃÃ‹ÃˆÃ‡ÃŠÃ";
+    public string Distance_right = "ÃÃ‹ÃˆÃ‡ÃŠÃ";
+    public string Distance_front = "ÃÃ‹ÃˆÃ‡ÃŠÃ";
+    public string To_target = "ÃÃÃ‚ÃÃ";
+    public string Dist_to_target = "Ã„Ã€Ã‹Ã…ÃŠÃ";
 
     private void FixedUpdate()
     {
@@ -87,42 +95,42 @@ public class Fuzzy_logic : MonoBehaviour
     private void Update_Move()
     {
         
-        if (Speed == "ÑÒÎÏ") Move.speed = (Speed_func[0, 1]+ Speed_func[0, 2])/2;
-        if (Speed == "ÌÅÄËÅÍÍÎ") Move.speed = (Speed_func[1, 1] + Speed_func[1, 2]) / 2;
-        if (Speed == "ÑĞÅÄÍÅ") Move.speed = (Speed_func[2, 1] + Speed_func[2, 2]) / 2;
-        if (Speed == "ÁÛÑÒĞÎ") Move.speed = (Speed_func[3, 1] + Speed_func[3, 2]) / 2;
+        if (Speed == "Ã‘Ã’ÃÃ") Move.speed = (Speed_func[0, 1]+ Speed_func[0, 2])/2;
+        if (Speed == "ÃŒÃ…Ã„Ã‹Ã…ÃÃÃ") Move.speed = (Speed_func[1, 1] + Speed_func[1, 2]) / 2;
+        if (Speed == "Ã‘ÃÃ…Ã„ÃÃ…") Move.speed = (Speed_func[2, 1] + Speed_func[2, 2]) / 2;
+        if (Speed == "ÃÃ›Ã‘Ã’ÃÃ") Move.speed = (Speed_func[3, 1] + Speed_func[3, 2]) / 2;
         
 
-        if (Degree == "ĞÎÂÍÎ") Move.degree = (Degree_func[0, 1] + Degree_func[0, 2]) / 2;
-        if (Degree == "ËÅÂÅÅ") Move.degree = (Degree_func[1, 1] + Degree_func[1, 2]) / 2;
-        if (Degree == "ÑÈËÜÍÎ ËÅÂÅÅ") Move.degree = (Degree_func[2, 1] + Degree_func[2, 2]) / 2;
-        if (Degree == "ÏĞÀÂÅÅ") Move.degree = (Degree_func[3, 1] + Degree_func[3, 2]) / 2;
-        if (Degree == "ÑÈËÜÍÎ ÏĞÀÂÅÅ") Move.degree = (Degree_func[3, 1] + Degree_func[3, 2]) / 2;
+        if (Degree == "ÃÃÃ‚ÃÃ") Move.degree = (Degree_func[0, 1] + Degree_func[0, 2]) / 2;
+        if (Degree == "Ã‹Ã…Ã‚Ã…Ã…") Move.degree = (Degree_func[1, 1] + Degree_func[1, 2]) / 2;
+        if (Degree == "Ã‘ÃˆÃ‹ÃœÃÃ Ã‹Ã…Ã‚Ã…Ã…") Move.degree = (Degree_func[2, 1] + Degree_func[2, 2]) / 2;
+        if (Degree == "ÃÃÃ€Ã‚Ã…Ã…") Move.degree = (Degree_func[3, 1] + Degree_func[3, 2]) / 2;
+        if (Degree == "Ã‘ÃˆÃ‹ÃœÃÃ ÃÃÃ€Ã‚Ã…Ã…") Move.degree = (Degree_func[3, 1] + Degree_func[3, 2]) / 2;
 
     }
 
     public float Rules_y(float[] x_m, float x)
     {
         float y = 0;
-        if (x >= 0)
-        {
+        //if (x >= 0)
+        //{
             if ((x >= x_m[0]) && (x <= x_m[1])) y = (x - x_m[0]) / (x_m[1] - x_m[0]);
             if ((x > x_m[1]) & (x <= x_m[2])) y = 1;
             if ((x > x_m[2]) & (x <= x_m[3])) y = (x_m[3] - x) / (x_m[3] - x_m[2]);
-        }
+        /*}
         else
         {
             if ((x <= x_m[0]) && (x >= x_m[1])) y = (x - x_m[0]) / (x_m[1] - x_m[0]);
             if ((x < x_m[1]) & (x >= x_m[2])) y = 1;
             if ((x < x_m[2]) & (x >= x_m[3])) y = (x_m[3] - x) / (x_m[3] - x_m[2]);
-        }
+        }*/
 
         return y;
     }
 
     public void Update_param()
     {
-        // Ğàññ÷åò ïğèíàäëåæíîñòè ñêîğîñòè äëÿ îïğåäåëåíèÿ ïåğåìåííîé
+        // ÃÃ Ã±Ã±Ã·Ã¥Ã² Ã¯Ã°Ã¨Ã­Ã Ã¤Ã«Ã¥Ã¦Ã­Ã®Ã±Ã²Ã¨ Ã±ÃªÃ®Ã°Ã®Ã±Ã²Ã¨ Ã¤Ã«Ã¿ Ã®Ã¯Ã°Ã¥Ã¤Ã¥Ã«Ã¥Ã­Ã¨Ã¿ Ã¯Ã¥Ã°Ã¥Ã¬Ã¥Ã­Ã­Ã®Ã©
         float y_speed_stop = Rules_y(Get_rows(Speed_func, 0), Move.speed);
         float y_speed_low = Rules_y(Get_rows(Speed_func, 1), Move.speed);
         float y_speed_medium = Rules_y(Get_rows(Speed_func, 2), Move.speed);
@@ -136,39 +144,70 @@ public class Fuzzy_logic : MonoBehaviour
         if (y_speed_medium == mass_speed[3]) Speed = Speed_medium_name;
         if (y_speed_fast == mass_speed[3]) Speed = Speed_fast_name;
 
-        // Ğàññ÷åò ğàñòîÿíèÿ äëÿ îïğåäåëåíèÿ ïåğåìåííîé
-        // Ñëåâà
-        float y_dist_low = Rules_y(Get_rows(Dist_func, 0), Lidar.left_dist);
-        float y_dist_med = Rules_y(Get_rows(Dist_func, 1), Lidar.left_dist);
-        float y_dist_hig = Rules_y(Get_rows(Dist_func, 2), Lidar.left_dist);
-        float[] mass_dist_l = { y_dist_low, y_dist_med, y_dist_hig};
+        // ÃÃ Ã±Ã±Ã·Ã¥Ã² Ã°Ã Ã±Ã²Ã®Ã¿Ã­Ã¨Ã¿ Ã¤Ã«Ã¿ Ã®Ã¯Ã°Ã¥Ã¤Ã¥Ã«Ã¥Ã­Ã¨Ã¿ Ã¯Ã¥Ã°Ã¥Ã¬Ã¥Ã­Ã­Ã®Ã©
+        // Ã‘Ã«Ã¥Ã¢Ã 
+        float y_dist_zero = Rules_y(Get_rows(Dist_func, 0), Lidar.left_dist);
+        float y_dist_low = Rules_y(Get_rows(Dist_func, 1), Lidar.left_dist);
+        float y_dist_med = Rules_y(Get_rows(Dist_func, 2), Lidar.left_dist);
+        float y_dist_hig = Rules_y(Get_rows(Dist_func, 3), Lidar.left_dist);
+        float[] mass_dist_l = { y_dist_low, y_dist_med, y_dist_hig, y_dist_zero };
         Array.Sort(mass_dist_l);
-        if (y_dist_low == mass_dist_l[2]) Distance_left = Distance_low_name;
-        if (y_dist_med == mass_dist_l[2]) Distance_left = Distance_med_name;
-        if (y_dist_hig == mass_dist_l[2]) Distance_left = Distance_high_name;
+        if (y_dist_low == mass_dist_l[3]) Distance_left = Distance_low_name;
+        if (y_dist_med == mass_dist_l[3]) Distance_left = Distance_med_name;
+        if (y_dist_hig == mass_dist_l[3]) Distance_left = Distance_high_name;
+        if (y_dist_zero == mass_dist_l[3]) Distance_left = Distance_low_zero;
 
-        // Ñïğàâà
-        y_dist_low = Rules_y(Get_rows(Dist_func, 0), Lidar.right_dist);
-        y_dist_med = Rules_y(Get_rows(Dist_func, 1), Lidar.right_dist);
-        y_dist_hig = Rules_y(Get_rows(Dist_func, 2), Lidar.right_dist);
-        float[] mass_dist_r = { y_dist_low, y_dist_med, y_dist_hig };
+        // Ã‘Ã¯Ã°Ã Ã¢Ã 
+        y_dist_zero = Rules_y(Get_rows(Dist_func, 0), Lidar.left_dist);
+        y_dist_low = Rules_y(Get_rows(Dist_func, 1), Lidar.right_dist);
+        y_dist_med = Rules_y(Get_rows(Dist_func, 2), Lidar.right_dist);
+        y_dist_hig = Rules_y(Get_rows(Dist_func, 3), Lidar.right_dist);
+        float[] mass_dist_r = { y_dist_low, y_dist_med, y_dist_hig, y_dist_zero };
         Array.Sort(mass_dist_r);
-        if (y_dist_low == mass_dist_r[2]) Distance_right = Distance_low_name;
-        if (y_dist_med == mass_dist_r[2]) Distance_right = Distance_med_name;
-        if (y_dist_hig == mass_dist_r[2]) Distance_right = Distance_high_name;
+        if (y_dist_low == mass_dist_r[3]) Distance_right = Distance_low_name;
+        if (y_dist_med == mass_dist_r[3]) Distance_right = Distance_med_name;
+        if (y_dist_hig == mass_dist_r[3]) Distance_right = Distance_high_name;
+        if (y_dist_zero == mass_dist_r[3]) Distance_right = Distance_low_zero;
 
-        // Ïğÿìî
-        y_dist_low = Rules_y(Get_rows(Dist_func, 0), Lidar.forward_dist);
-        y_dist_med = Rules_y(Get_rows(Dist_func, 1), Lidar.forward_dist);
-        y_dist_hig = Rules_y(Get_rows(Dist_func, 2), Lidar.forward_dist);
-        float[] mass_dist_f = { y_dist_low, y_dist_med, y_dist_hig };
+        //////////////////////////////////////////////
+        // Ã‘Ã¯Ã°Ã Ã¢Ã  45
+        y_dist_zero = Rules_y(Get_rows(Dist_func, 0), Lidar.right_45_dist);
+        y_dist_low = Rules_y(Get_rows(Dist_func, 1), Lidar.right_45_dist);
+        y_dist_med = Rules_y(Get_rows(Dist_func, 2), Lidar.right_45_dist);
+        y_dist_hig = Rules_y(Get_rows(Dist_func, 3), Lidar.right_45_dist);
+        float[] mass_dist_r_45 = { y_dist_low, y_dist_med, y_dist_hig, y_dist_zero };
+        Array.Sort(mass_dist_r_45);
+        if (y_dist_low == mass_dist_r_45[3]) Distance_45_right = Distance_low_name;
+        if (y_dist_med == mass_dist_r_45[3]) Distance_45_right = Distance_med_name;
+        if (y_dist_hig == mass_dist_r_45[3]) Distance_45_right = Distance_high_name;
+        if (y_dist_zero == mass_dist_r_45[3]) Distance_45_right = Distance_low_zero;
+
+        //////////////////////////////////////////////
+        // Ã‘Ã«Ã¥Ã¢Ã  45
+        y_dist_zero = Rules_y(Get_rows(Dist_func, 0), Lidar.left_45_dist);
+        y_dist_low = Rules_y(Get_rows(Dist_func, 1), Lidar.left_45_dist);
+        y_dist_med = Rules_y(Get_rows(Dist_func, 2), Lidar.left_45_dist);
+        y_dist_hig = Rules_y(Get_rows(Dist_func, 3), Lidar.left_45_dist);
+        float[] mass_dist_l_45 = { y_dist_low, y_dist_med, y_dist_hig, y_dist_zero };
+        Array.Sort(mass_dist_l_45);
+        if (y_dist_low == mass_dist_l_45[3]) Distance_45_left = Distance_low_name;
+        if (y_dist_med == mass_dist_l_45[3]) Distance_45_left = Distance_med_name;
+        if (y_dist_hig == mass_dist_l_45[3]) Distance_45_left = Distance_high_name;
+        if(y_dist_zero == mass_dist_l_45[3]) Distance_45_left = Distance_low_zero;
+
+        // ÃÃ°Ã¿Ã¬Ã®
+        y_dist_zero = Rules_y(Get_rows(Dist_func, 0), Lidar.forward_dist);
+        y_dist_low = Rules_y(Get_rows(Dist_func, 1), Lidar.forward_dist);
+        y_dist_med = Rules_y(Get_rows(Dist_func, 2), Lidar.forward_dist);
+        y_dist_hig = Rules_y(Get_rows(Dist_func, 3), Lidar.forward_dist);
+        float[] mass_dist_f = { y_dist_low, y_dist_med, y_dist_hig, y_dist_zero };
         Array.Sort(mass_dist_f);
-        if (y_dist_low == mass_dist_f[2]) Distance_front = Distance_low_name;
-        if (y_dist_med == mass_dist_f[2]) Distance_front = Distance_med_name;
-        if (y_dist_hig == mass_dist_f[2]) Distance_front = Distance_high_name;
+        if (y_dist_low == mass_dist_f[3]) Distance_front = Distance_low_name;
+        if (y_dist_med == mass_dist_f[3]) Distance_front = Distance_med_name;
+        if (y_dist_hig == mass_dist_f[3]) Distance_front = Distance_high_name;
+        if (y_dist_zero == mass_dist_f[3]) Distance_front = Distance_low_zero;
 
-
-        // Ğàññòîÿíèå äî öåëè
+        // ÃÃ Ã±Ã±Ã²Ã®Ã¿Ã­Ã¨Ã¥ Ã¤Ã® Ã¶Ã¥Ã«Ã¨
         float _dist_to_traget = Vector3.Distance(target.position, Lidar.transform.position);
         float y_dist_s = Rules_y(Get_rows(Dist_to_target_func, 0), _dist_to_traget);
         y_dist_low = Rules_y(Get_rows(Dist_to_target_func, 1), _dist_to_traget);
@@ -183,17 +222,15 @@ public class Fuzzy_logic : MonoBehaviour
         if (y_dist_med == mass_dist_to_target[3]) Dist_to_target = Distance_to_target_med_name;
         if (y_dist_hig == mass_dist_to_target[3]) Dist_to_target = Distance_to_target_high_name;
 
-    // Ğàññ÷åò Íàïğàâëåíèÿ íà öåëü äëÿ îïğåäåëåíèÿ ïåğåìåííîé
-    //float angle = transform.eulerAngles.y;
 
-    float angle = AngleAroundAxis(target.transform.forward, target.transform.position - transform.position, transform.up)-90f;
+        float angle = (Vector3.SignedAngle(target.transform.position- pos.transform.position, pos.transform.forward, Vector3.up)+90)*-1;
         if (angle < -180)
         {
             angle += 360;
         }
-
-
         //UnityEngine.Debug.Log(angle);
+
+
 
         float y_angle_norm = Rules_y(Get_rows(Deg_to_target_func, 0), angle);
         float y_angle_left = Rules_y(Get_rows(Deg_to_target_func, 1), angle);
